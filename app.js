@@ -12,16 +12,16 @@ const menu = [
     {
         id: 2,
         title: "noodles",
-        category: 'dinner',
+        category: 'breakfast',
         price: 15.00,
         img: './pasta.jpg',
-        description: 'mewAl dente pasta in a tomato basil sauce topped with parmesan cheese',
+        description: 'BREAKFAST ITEM',
     },
 
     {
         id: 3,
         title: "pizza",
-        category: 'dinner',
+        category: 'lunch',
         price: 15.00,
         img: './pasta.jpg',
         description: 'Al dente pasta in a tomato basil sauce topped with parmesan cheese',
@@ -30,8 +30,37 @@ const menu = [
 
 const sectionCenter = document.querySelector('.section-center');
 
+const filterBtns = document.querySelectorAll('.filter-btn')
+
+
+// load all items
 window.addEventListener('DOMContentLoaded', function() {
-    let displayMenu = menu.map(function(item) {
+    displayMenuItems(menu)
+});
+
+// filter items
+filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function(e){
+   const category = e.currentTarget.dataset.id;
+   const menuCategory = menu.filter(function(menuItem){
+
+    if(menuItem.category === category){
+        return menuItem;
+    }
+   })
+   console.log(menuCategory)
+   if(category === "all"){
+    displayMenuItems(menu)
+   } else{
+    displayMenuItems(menuCategory);
+   }
+    })
+})
+
+
+// function to return the HTML for an article for each of the items in the menu array
+function displayMenuItems(menuItems){
+    let displayMenu = menuItems.map(function(item) {
         // console.log(item)
 
         return `<article class="menu-item">
@@ -46,8 +75,4 @@ window.addEventListener('DOMContentLoaded', function() {
     // join into 1 string
     displayMenu = displayMenu.join("")
     sectionCenter.innerHTML = displayMenu;
-});
-
-function displayMenuItems(menuItems){
-    
 }
